@@ -1,0 +1,73 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Patient {
+  id        Int      @id @default(autoincrement())
+  name      String   @db.VarChar(255)
+  email     String   @db.VarChar(255)
+  birth     String   @db.VarChar(255)
+  phone     String   @db.VarChar(20)
+  rg        String   @db.VarChar(20)
+  cpf       String?  @db.VarChar(20)
+  address   String   @db.VarChar(60)
+  district  String   @db.VarChar(80)
+  city      String   @db.VarChar(80)
+  state     String   @db.VarChar(80)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Role {
+  id        Int      @id @default(autoincrement())
+  name      String   @db.VarChar(255)
+  professionals Professional[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+}
+
+model Service {
+  id        Int      @id @default(autoincrement())
+  name      String   @db.VarChar(255)
+  price     Decimal  @db.Decimal(7, 2)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Professional {
+  id        Int      @id @default(autoincrement())
+  role      Role?     @relation(fields: [roleId], references: [id])
+  roleId    Int?
+  name      String   @db.VarChar(255)
+  email     String   @db.VarChar(255)
+  birth     String   @db.VarChar(255)
+  phone     String   @db.VarChar(20)
+  rg        String   @db.VarChar(20)
+  cpf       String?  @db.VarChar(20)
+  address   String   @db.VarChar(60)
+  district  String   @db.VarChar(80)
+  city      String   @db.VarChar(80)
+  state     String   @db.VarChar(80)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+
+model User{
+   id           Int      @id @default(autoincrement())
+   name         String   @db.VarChar(255)
+   email        String   @unique @db.VarChar(255)
+   password     String   @db.VarChar(255)
+   admin        Boolean
+   createdAt DateTime @default(now())
+   updatedAt DateTime @updatedAt
+}
