@@ -11,7 +11,7 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 const corsOptions = {
-  origin: ['http://localhost:3000', 'https://medease.up.railway.app/'],
+  origin: ['http://localhost:3000', 'https://medease.up.railway.app'],
   optionsSuccessStatus: 200 // algumas versões do navegador 204
 };
 
