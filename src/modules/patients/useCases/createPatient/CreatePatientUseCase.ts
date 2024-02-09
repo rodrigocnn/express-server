@@ -1,3 +1,4 @@
+import { inject } from 'tsyringe';
 import { IPatientsRepository } from '../../repositories/IPatientsRepository';
 
 interface IRequest {
@@ -14,6 +15,7 @@ interface IRequest {
 }
 
 export interface IResponsePatient {
+  id?: number;
   name: string;
   email: string;
   birth: string;
@@ -27,7 +29,10 @@ export interface IResponsePatient {
 }
 
 export class CreatePatientUseCase {
-  constructor(private patientsRepository: IPatientsRepository) {}
+  constructor(
+    @inject('PatientsRepositoryPrisma')
+    private patientsRepository: IPatientsRepository
+  ) {}
 
   async execute(patient: IRequest): Promise<IResponsePatient> {
     if (!patient.name || !patient.email) {

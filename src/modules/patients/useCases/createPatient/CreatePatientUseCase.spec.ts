@@ -1,3 +1,5 @@
+import 'reflect-metadata';
+
 import { PatientsRepositoryInMemory } from '../../repositories/PatientsRepositoryInMemory';
 import { CreatePatientUseCase } from './CreatePatientUseCase';
 
