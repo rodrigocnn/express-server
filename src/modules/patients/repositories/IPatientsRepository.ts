@@ -1,4 +1,5 @@
 export interface ICreatePatientDTO {
+  id?: number;
   name: string;
   email: string;
   birth: string;
@@ -11,7 +12,7 @@ export interface ICreatePatientDTO {
   state: string;
 }
 export interface IResponsePatient {
-  id: number;
+  id?: number;
   name: string;
   email: string;
   birth: string;
@@ -22,15 +23,14 @@ export interface IResponsePatient {
   district: string;
   city: string;
   state: string;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 export interface IPatientsRepository {
   create(patient: ICreatePatientDTO): Promise<IResponsePatient | null>;
-  read(): void;
-  update(id: string, role: ICreatePatientDTO): void;
+  read(): Promise<IResponsePatient[]>;
+  update(id: string, role: ICreatePatientDTO): Promise<IResponsePatient | null>;
   show(id: string): Promise<IResponsePatient | null>;
-  // delete(id: string): void
   exists?(id: string): Promise<boolean>;
 }

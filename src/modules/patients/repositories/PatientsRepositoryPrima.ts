@@ -55,8 +55,11 @@ export class PatientsRepositoryPrima implements IPatientsRepository {
       : null;
   }
 
-  async update(id: string, patient: ICreatePatientDTO) {
-    await prisma.patient.update({
+  async update(
+    id: string,
+    patient: ICreatePatientDTO
+  ): Promise<IResponsePatient | null> {
+    return await prisma.patient.update({
       where: {
         id: Number(id)
       },
@@ -71,7 +74,7 @@ export class PatientsRepositoryPrima implements IPatientsRepository {
         district: patient.district,
         city: patient.city,
         state: patient.state
-      } as ICreatePatientDTO
+      } as IResponsePatient
     });
   }
 
