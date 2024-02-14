@@ -1,4 +1,4 @@
-export interface ICreatePatientDTO {
+export interface IPatientDTO {
   id?: number;
   name: string;
   email: string;
@@ -28,9 +28,9 @@ export interface IResponsePatient {
 }
 
 export interface IPatientsRepository {
-  create(patient: ICreatePatientDTO): Promise<IResponsePatient | null>;
+  create(patient: IPatientDTO): Promise<IResponsePatient | null>;
   read(): Promise<IResponsePatient[]>;
-  update(id: string, role: ICreatePatientDTO): Promise<IResponsePatient | null>;
-  show(id: string): Promise<IResponsePatient | null>;
-  exists?(id: string): Promise<boolean>;
+  update(id: number, patient: IPatientDTO): Promise<IResponsePatient | null>;
+  show(id: number): Promise<IResponsePatient | null>;
+  exists?(id: number): Promise<boolean>;
 }

@@ -1,12 +1,12 @@
 import {
-  ICreatePatientDTO,
+  IPatientDTO,
   IPatientsRepository,
   IResponsePatient
 } from './IPatientsRepository';
 import { prisma } from '../../../database/prismaClient';
 
 export class PatientsRepositoryPrima implements IPatientsRepository {
-  async create(patient: ICreatePatientDTO) {
+  async create(patient: IPatientDTO) {
     const result = await prisma.patient.create({ data: patient });
     return result
       ? {
@@ -32,7 +32,7 @@ export class PatientsRepositoryPrima implements IPatientsRepository {
     return patients;
   }
 
-  async show(id: string): Promise<IResponsePatient | null> {
+  async show(id: number): Promise<IResponsePatient | null> {
     const result = await prisma.patient.findFirst({
       where: { id: Number(id) }
     });
@@ -56,8 +56,8 @@ export class PatientsRepositoryPrima implements IPatientsRepository {
   }
 
   async update(
-    id: string,
-    patient: ICreatePatientDTO
+    id: number,
+    patient: IPatientDTO
   ): Promise<IResponsePatient | null> {
     return await prisma.patient.update({
       where: {
@@ -78,7 +78,7 @@ export class PatientsRepositoryPrima implements IPatientsRepository {
     });
   }
 
-  async exists(id: string) {
+  async exists(id: number) {
     const patient = await prisma.patient.findFirst({
       where: {
         id: {

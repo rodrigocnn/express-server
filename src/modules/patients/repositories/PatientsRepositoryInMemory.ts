@@ -1,7 +1,5 @@
-import { v4 as uuidv4 } from 'uuid';
-
 import {
-  ICreatePatientDTO,
+  IPatientDTO,
   IPatientsRepository,
   IResponsePatient
 } from './IPatientsRepository';
@@ -13,9 +11,9 @@ function getRandomInt(min, max) {
 }
 
 export class PatientsRepositoryInMemory implements IPatientsRepository {
-  patients: ICreatePatientDTO[] = [];
+  patients: IPatientDTO[] = [];
 
-  async create(patient: ICreatePatientDTO): Promise<IResponsePatient> {
+  async create(patient: IPatientDTO): Promise<IResponsePatient> {
     const id = getRandomInt(1, 100);
     const patientWithId = { ...patient, id };
     await this.patients.push(patientWithId);
@@ -24,18 +22,17 @@ export class PatientsRepositoryInMemory implements IPatientsRepository {
   async read(): Promise<IResponsePatient[]> {
     return await this.patients;
   }
-  async update(
-    id: string,
-    patient: ICreatePatientDTO
-  ): Promise<IResponsePatient> {
-    return await this.patients.find((patient) => patient.id === Number(id));
+  async update(id: number, patient: IPatientDTO): Promise<IResponsePatient> {
+    const index = this.patients.findIndex((patient) => patient.id === id);
+    this.patients[index] = { ...this.patients[index], ...patient };
+    return this.patients[index];
   }
-  async show(id: string): Promise<IResponsePatient> {
-    const patient = this.patients.find((patient) => patient.id === Number(id));
+  async show(id: number): Promise<IResponsePatient> {
+    const patient = this.patients.find((patient) => patient.id === id);
     return patient;
   }
-  async exists?(id: string): Promise<boolean> {
-    const patient = this.patients.find((patient) => patient.id === Number(id));
+  async exists?(id: number): Promise<boolean> {
+    const patient = this.patients.find((patient) => patient.id === id);
     return !!patient;
   }
 }

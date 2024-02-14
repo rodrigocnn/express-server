@@ -9,7 +9,7 @@ export class ShowPatientUseCase {
     private patientsRepository: IPatientsRepository
   ) {}
 
-  async execute(id: string) {
+  async execute(id: number) {
     if (this.patientsRepository.exists) {
       const roleExists = await this.patientsRepository.show(id);
       if (!roleExists) {
